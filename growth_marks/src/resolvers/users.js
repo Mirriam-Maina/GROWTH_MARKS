@@ -1,6 +1,4 @@
-import User from '../models/users';
-import authController from '../controllers/authController';
-import sequelize from '../models/config';
+import authController from '../models/controllers/authController';
 
 export default {
     Query: {
@@ -18,6 +16,3 @@ export default {
         }
     }
   };
-
-
-sequelize.sync();

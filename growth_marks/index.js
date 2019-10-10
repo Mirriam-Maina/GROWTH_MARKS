@@ -1,10 +1,22 @@
-const { ApolloServer } = require('apollo-server');
+import { ApolloServer } from 'apollo-server';
 import typeDefs from './src/schemas/index';
 import resolvers from './src/resolvers/index';
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+  context: async({req}) => {
+      return { req };
+  },
+  formatError: (err) => {
+    if (err.message.startsWith("Database Error: ")) {
+      return new Error('Internal server error');
+    }
+    return err;
+  },
+});
 
-// The `listen` method launches a web server.
+
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });

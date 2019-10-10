@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // Option 2: Passing a connection URI
-const sequelize = new Sequelize( {username: 'mirriam',
+const sequelize = new Sequelize({username: 'mirriam',
 password: null,
 database: 'growthmarks',
 host: '127.0.0.1',

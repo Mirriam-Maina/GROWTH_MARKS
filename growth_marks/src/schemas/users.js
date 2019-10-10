@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server';
  
  export default gql`
   type User {
@@ -9,12 +9,11 @@ const { gql } = require('apollo-server');
     token: String!
   }
 
-  type Query {
-    users: [User],
-    authenticationError: String
+  extend type Query {
+    users: [User]
   }
 
-  type Mutation {
+  extend type Mutation {
     signUp(firstName: String, lastName: String, email: String! password: String! phoneNumber: String!): User,
     signIn(email: String! password: String!): User
   }

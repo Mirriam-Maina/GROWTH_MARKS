@@ -20,7 +20,8 @@ const auth =  {
             user_email = decoded;
 
         });
-        return user_email; 
+        const loggedInUser = {user_email, isLoggedIn: true };
+        return loggedInUser;
     },
 
     checkIfExists: async (email) => {
@@ -31,6 +32,8 @@ const auth =  {
         return false;
 
     }
+
+
 }
 
 export default auth;
