@@ -5,10 +5,10 @@ import article from '../middleware/articles';
 const articleController = {
 
     createArticle: async(data) => {
-        const { title } = data;
+        const { title, body, user } = data;
         const articleExists = await article.checkIfExists({title});
         if(!articleExists){
-            const createdArticle = await Article.create(data)
+            const createdArticle = await Article.create({title, body, userId: user.data.id})
             return createdArticle;
         }
         throw new Error('Article with that title already exists', 409)

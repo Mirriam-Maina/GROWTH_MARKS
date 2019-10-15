@@ -1,5 +1,6 @@
 import sequelize from "./config";
 import Sequelize from 'sequelize';
+import User from './users';
 
 const Article = sequelize.define('article', {
     title: {
@@ -11,6 +12,8 @@ const Article = sequelize.define('article', {
         allowNull: false
       }
 });
+
+Article.belongsTo(User);
 
 sequelize.sync({force:true});
 

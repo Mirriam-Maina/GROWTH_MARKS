@@ -5,6 +5,7 @@ import { gql } from 'apollo-server';
     id: ID!
     title: String!
     body: String!
+    userId: Int
   }
 
   extend type Query {

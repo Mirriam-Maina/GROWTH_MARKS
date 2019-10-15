@@ -10,8 +10,8 @@ const authContoller = {
         const passHash = auth.hashPassword(password);
         const userExists = await auth.checkIfExists(email);
         if(!userExists){
-            const token =  auth.createToken(email);
             const newUser =  await User.create({...data, password: passHash})
+            const token =  auth.createToken(email, newUser.id);
             newUser.token = token;
             return newUser;
         }

@@ -1,28 +1,35 @@
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../models/users';
 
 const auth =  {
-    createToken: (email) => {
+    createToken: (email, id) => {
         const token = jwt.sign({
-            data: email
+            data: {email, id}
         }, 'secret', { expiresIn: '1h' });
 
         return token;
     },
 
-    decodeToken: (token) => {
-        let user_email;
+    decodeToken: async(req) => {
+        const token = req.headers.authorization;
+        if(!token){
+            throw new AuthenticationError('Token is required');
+        }
+        let user;
         jwt.verify(token, 'secret', (err, decoded) => {
             if(err){
                 throw new AuthenticationError(err)
             }
-            user_email = decoded;
-
+            user = decoded;
         });
-        const loggedInUser = {user_email, isLoggedIn: true };
-        return loggedInUser;
+        const userExists = await User.findOne({where: {id: user.data.id}})
+        if(userExists){
+            const loggedInUser = {user, isLoggedIn: true };
+            return loggedInUser;
+        }
+        throw new ForbiddenError('User does not exist');
     },
 
     checkIfExists: async (email) => {
