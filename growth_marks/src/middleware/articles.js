@@ -1,5 +1,4 @@
 import Article from '../models/articles';
-import { AuthenticationError } from 'apollo-server';
 
 const article = {
 

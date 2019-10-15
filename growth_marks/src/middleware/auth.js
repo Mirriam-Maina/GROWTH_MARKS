@@ -1,5 +1,6 @@
 import { AuthenticationError } from 'apollo-server';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import User from '../models/users';
 
 const auth =  {
@@ -31,6 +32,16 @@ const auth =  {
         }
         return false;
 
+    },
+
+    hashPassword: (password) => {
+        const salt = bcrypt.genSaltSync(10);
+        const passHash = bcrypt.hashSync(password, salt);
+        return passHash;
+    },
+
+    passwordsMatch: async(password, hash) => {
+        return bcrypt.compareSync(password, hash);
     }
 
 

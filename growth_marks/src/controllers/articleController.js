@@ -1,5 +1,5 @@
-import Article from '../articles';
-import article from '../../middleware/articles';
+import Article from '../models/articles';
+import article from '../middleware/articles';
 
 
 const articleController = {

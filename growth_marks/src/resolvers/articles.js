@@ -1,5 +1,5 @@
 import auth from '../middleware/auth';
-import articlesController from '../models/controllers/articleController';
+import articlesController from '../controllers/articleController';
 
 
 const checkLoggedInUser = (context) => {

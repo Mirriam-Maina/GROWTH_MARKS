@@ -1,4 +1,4 @@
-import authController from '../models/controllers/authController';
+import authController from '../controllers/authController';
 
 export default {
     Query: {
