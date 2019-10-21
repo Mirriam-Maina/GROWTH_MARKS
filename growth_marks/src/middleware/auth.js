@@ -7,7 +7,7 @@ const auth =  {
     createToken: (email, id) => {
         const token = jwt.sign({
             data: {email, id}
-        }, 'secret', { expiresIn: '1h' });
+        }, 'secret', { expiresIn: '24h' });
 
         return token;
     },

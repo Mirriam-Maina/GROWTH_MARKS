@@ -45,7 +45,6 @@ const articleController = {
         const articleExists = await article.checkIfExists({id});
         if(articleExists){
             const deleteArticle = Article.destroy({where: {id}});
-            console.log({deleteArticle});
             return deleteArticle;
         }
         throw new Error('That article does not exist');

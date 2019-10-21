@@ -16,11 +16,11 @@ const User = sequelize.define('user', {
       },
     password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
     phoneNumber: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       }
 });
 
