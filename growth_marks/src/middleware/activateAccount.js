@@ -1,17 +1,20 @@
 import nodemailer from 'nodemailer';
 import User from '../models/users';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 const sendActivationEmail = async(email) => {
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+    service: process.env.EMAIL_SERVICE,
+    host: process.env.EMAIL_HOST,
     port: 465,
     secure: true, 
     auth: {
-        user: "growthmarks@gmail.com", 
-        pass: "mirriam565680!"
+        user: process.env.EMAIL, 
+        pass: process.env.PASSWORD
     }
 });
 
