@@ -2,12 +2,15 @@ import { AuthenticationError, ForbiddenError } from 'apollo-server';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../models/users';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const auth =  {
     createToken: (email, id) => {
         const token = jwt.sign({
             data: {email, id}
-        }, 'secret', { expiresIn: '24h' });
+        }, process.env.SECRET, { expiresIn: '24h' });
 
         return token;
     },
@@ -35,7 +38,7 @@ const auth =  {
     checkIfExists: async (email) => {
         const userExists = await User.findOne({ where: {email} })
         if(userExists){
-            throw new AuthenticationError('This user already exists')
+           return { userExists, status: true}
         }
         return false;
 

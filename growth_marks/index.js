@@ -5,8 +5,8 @@ import resolvers from './src/resolvers/index';
 const server = new ApolloServer({ 
   typeDefs, 
   resolvers,
-  context: async({req}) => {
-      return { req };
+  context: async({req, res}) => {
+      return { req, res};
   },
   formatError: (err) => {
     if (err.message.startsWith("Database Error: ")) {

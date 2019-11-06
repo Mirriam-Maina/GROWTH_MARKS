@@ -1,8 +1,8 @@
 import { AuthenticationError } from 'apollo-server';
-import bcrypt from 'bcrypt';
 import auth from '../middleware/auth';
 import User from '../models/users';
-import { sign } from 'crypto';
+import errors from '../constants/errors';
+import sendActivationEmail from '../middleware/activateAccount';
 
 const authContoller = {
     signUp: async(data) => {
@@ -10,10 +10,14 @@ const authContoller = {
         const passHash = auth.hashPassword(password);
         const userExists = await auth.checkIfExists(email);
         if(!userExists){
-            const newUser =  await User.create({...data, password: passHash})
-            const token =  auth.createToken(email, newUser.id);
-            newUser.token = token;
-            return newUser;
+            const token =  auth.createToken(email);
+            const newUser =  await User.create({...data, password: passHash, activateToken: token})
+            const response = {email, message: errors.verifyAccountMessage}
+            sendActivationEmail(email);
+            return response;
+        }
+        else{
+            throw new AuthenticationError('This user already exists')
         }
     },
 
@@ -38,6 +42,15 @@ const authContoller = {
         const { email } = data;
         const userData = await User.findOne({where: {email}});
         return userData;
+    }, 
+
+    confirmAccount: async(token) => {
+        const userExists = await User.findOne({where: {'activateToken': token}});
+        if(userExists){
+            await User.update({isEnabled: true}, {where: {'activateToken': token}})
+            return userExists;
+        }
+        throw new AuthenticationError('Incorrect verification token. Resend activation link');
     }
 
 }

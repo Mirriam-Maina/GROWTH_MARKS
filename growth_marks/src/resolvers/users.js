@@ -8,7 +8,7 @@ export default {
 
     Mutation: {
         signUp: async(parent, {firstName, lastName, email, password, phoneNumber}) =>{
-          const createdUser = authController.signUp({firstName, lastName, email, password, phoneNumber});
+          const createdUser = await authController.signUp({firstName, lastName, email, password, phoneNumber});
           return createdUser;
         },
         signIn: async(parent, { email, password})=> {
@@ -22,6 +22,10 @@ export default {
           };
           const user = await authenticateUser(req, res);
           return user;
+        },
+        confirmAccount: async(parent, {token}) => {
+          const userExists = await authController.confirmAccount(token);
+          return userExists;
         }
     }
   };

@@ -23,9 +23,15 @@ import { gql } from 'apollo-server';
     accessToken: String!
   }
 
+  type activateMessage {
+    email: String
+    message: String
+  }
+
   extend type Mutation {
-    signUp(firstName: String, lastName: String, email: String! password: String! phoneNumber: String!): User,
+    signUp(firstName: String, lastName: String, email: String! password: String! phoneNumber: String!): activateMessage,
     signIn(email: String! password: String!): User
+    confirmAccount(token: String!): User
   }
 
   extend type Mutation {

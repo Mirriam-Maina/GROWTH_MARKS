@@ -34,10 +34,10 @@ export const authenticateUser = async(req, res) => {
     const { data: { profile: {_json: {email, first_name, last_name}} }} = authData;
     const userExists = await auth.checkIfExists(email);
     if(userExists){
-        const user = await User.findOne({where: {'email':email}});
-        const token = auth.createToken(email, user.id);
-        user.token = token;
-        return user;
+        const authenticatedUser = await User.findOne({where: {'email':email}});
+        const token = auth.createToken(email, authenticatedUser.id);
+        authenticatedUser.token = token;
+        return authenticatedUser;
     }
     const authenticatedUser =  await User.create({email, firstName: first_name, lastName: last_name })
     const token =  auth.createToken(email, authenticatedUser.id);

@@ -21,6 +21,14 @@ const User = sequelize.define('user', {
     phoneNumber: {
         type: Sequelize.STRING,
         allowNull: true
+      },
+    isEnabled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      activateToken: {
+        type: Sequelize.STRING,
+        allowNull: false
       }
 });
 
