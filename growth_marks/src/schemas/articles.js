@@ -5,7 +5,7 @@ import { gql } from 'apollo-server';
     id: ID!
     title: String!
     body: String!
-    userId: Int
+    author: Int
   }
 
   extend type Query {

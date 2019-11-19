@@ -15,7 +15,7 @@ export default {
           const signedInUser = authController.signIn({email, password});
           return signedInUser;
         },
-        facebookAuth: async(parent, {accessToken}, {req, res}) => {
+        socialAuth: async(parent, {accessToken}, {req, res}) => {
           req.body = {
             ...req.body,
             access_token: accessToken

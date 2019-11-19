@@ -4,14 +4,14 @@ import auth from '../middleware/auth';
 import User from '../models/users';
 import FacebookTokenStrategy from 'passport-facebook-token';
 
-passport.use( new FacebookTokenStrategy({
+passport.use( 
+new FacebookTokenStrategy({
     clientID: config.facebookAuth.facebook_api_key,
     clientSecret: config.facebookAuth.facebook_api_secret
-  },
-  
-  (accessToken, refreshToken, profile, done) => done(null, {accessToken, refreshToken, profile})
-  ));
-
+    },
+    (accessToken, refreshToken, profile, done) => done(null, {accessToken, refreshToken, profile})
+ )
+)
 
 const facebookAuthController = (req, res) => new Promise((resolve, reject) => {
     passport.authenticate('facebook-token',{scope:'email'}, (err, data, info) => {

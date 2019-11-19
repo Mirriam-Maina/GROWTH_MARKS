@@ -14,6 +14,7 @@ const Article = sequelize.define('article', {
 });
 
 Article.belongsTo(User);
+User.hasMany(Article);
 
 sequelize.sync({force:true});
 

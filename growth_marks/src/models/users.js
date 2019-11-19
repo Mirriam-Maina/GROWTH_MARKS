@@ -28,7 +28,7 @@ const User = sequelize.define('user', {
       },
       activateToken: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       }
 });
 

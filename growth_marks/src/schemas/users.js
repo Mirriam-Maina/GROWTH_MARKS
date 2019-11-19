@@ -35,6 +35,6 @@ import { gql } from 'apollo-server';
   }
 
   extend type Mutation {
-    facebookAuth(accessToken: String): User
+    socialAuth(accessToken: String): User
   }
 `;

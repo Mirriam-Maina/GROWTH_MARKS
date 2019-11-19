@@ -29,7 +29,11 @@ const authContoller = {
             if(passwordMatch){
                 const token = auth.createToken(email);
                 signedInUser.token = token;
+                if(!signedInUser.dataValues.isEnabled){
+                    throw new AuthenticationError('User is not activated');
+                }
                 return signedInUser;
+
             }
             else {
                 throw new AuthenticationError('User with that email and password does not exist');

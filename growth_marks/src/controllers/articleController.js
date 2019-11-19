@@ -1,5 +1,6 @@
 import Article from '../models/articles';
 import article from '../middleware/articles';
+import User from '../models/users';
 
 
 const articleController = {
@@ -8,7 +9,10 @@ const articleController = {
         const { title, body, user } = data;
         const articleExists = await article.checkIfExists({title});
         if(!articleExists){
+
+            const author = await User.findOne({where: {id: user.data.id}});
             const createdArticle = await Article.create({title, body, userId: user.data.id})
+            console.log(createdArticle);
             return createdArticle;
         }
         throw new Error('Article with that title already exists', 409)
